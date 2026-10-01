@@ -1,0 +1,114 @@
+{
+  "name": "PopBox AI Assistent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7d7f5281-6ce0-4f04-9d98-d4db56f4fd82",
+      "name": "When chat message received",
+      "webhookId": "6061d95a-826e-4866-ba24-9802b43b46fe"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Anda adalah Asisten Virtual ramah dan antusias untuk 'PopBox', sebuah toko online yang menjual berbagai koleksi mainan Blind Box original (seperti Pop Mart, Skullpanda, Dimoo, dan Crybaby). Tugas Anda adalah membantu pelanggan menemukan seri blind box, menginformasikan kisaran harga, menjelaskan sistem secret figure (chase item), serta memandu cara pemesanan dengan ramah dan profesional."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "cf346589-436a-4168-9ee0-ec9ae5e712c5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        232,
+        232
+      ],
+      "id": "c9f5d2b8-a279-4505-94ae-dcec8b3fc533",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "mjf0dgnlB2Dlaf1T",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        360,
+        232
+      ],
+      "id": "2413e494-c7eb-45b8-805d-f01df1bbbc4a",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5a23455d-ba0e-4daf-93ad-bdd3363ae36e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "qCtuLAXwnGxcAWRF",
+  "tags": []
+}
